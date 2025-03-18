@@ -7,48 +7,56 @@ import java.util.concurrent.Future;
 
 public class Main {
     public static void main(String[] args) throws InterruptedException, ExecutionException {
-        int[] array = new Random().ints(1_000_000, 1, 100).toArray();
+        try {
+            int[] array = new Random().ints(1_000_000, 1, 100).toArray();
 
-        long startTime = System.nanoTime();
-        long sequentialSum = getSequencialSum(array);
-        long endTime = System.nanoTime();
-        long sequentialTime = endTime - startTime;
-        System.out.println("Sequential sum: " + sequentialSum + " in " + sequentialTime + " ns");
+            long startTime = System.currentTimeMillis();
+            long sequentialSum = getSequencialSum(array);
+            long endTime = System.currentTimeMillis();
+            long sequentialTime = endTime - startTime;
+            System.out.println("Sequential sum: " + sequentialSum + " in " + sequentialTime + " ms");
 
-        startTime = System.nanoTime();
-        long concurrentSum10 = concurrentSum(array, 10);
-        endTime = System.nanoTime();
-        long concurrentTime10 = endTime - startTime;
-        System.out.println("Concurrent sum with 10 threads: " + concurrentSum10 + " in " + concurrentTime10 + " ns");
+            startTime = System.currentTimeMillis();
+            long concurrentSum10 = concurrentSum(array, 10);
+            endTime = System.currentTimeMillis();
+            long concurrentTime10 = endTime - startTime;
+            System.out.println("Concurrent sum with 10 threads: " + concurrentSum10 + " in " + concurrentTime10 + " ms");
 
 
-        startTime = System.nanoTime();
-        long concurrentSum100 = concurrentSum(array, 100);
-        endTime = System.nanoTime();
-        long concurrentTime100 = endTime - startTime;
-        System.out.println("Concurrent sum with 100 threads: " + concurrentSum100 + " in " + concurrentTime100 + " ns");
+            startTime = System.currentTimeMillis();
+            long concurrentSum100 = concurrentSum(array, 100);
+            endTime = System.currentTimeMillis();
+            long concurrentTime100 = endTime - startTime;
+            System.out.println("Concurrent sum with 100 threads: " + concurrentSum100 + " in " + concurrentTime100 + " ms");
 
-        double speedup10 = (double) sequentialTime / concurrentTime10;
-        double speedup100 = (double) sequentialTime / concurrentTime100;
-        System.out.println("Speedup with 10 threads: " + speedup10);
-        System.out.println("Speedup with 100 threads: " + speedup100);
+            double speedup10 = (double) sequentialTime / concurrentTime10;
+            double speedup100 = (double) sequentialTime / concurrentTime100;
+            System.out.println("Speedup with 10 threads: " + speedup10);
+            System.out.println("Speedup with 100 threads: " + speedup100);
 
-        startTime = System.nanoTime();
-        long virtualSum10 = virtualSum(array, 10);
-        endTime = System.nanoTime();
-        long virtualTime10 = endTime - startTime;
-        System.out.println("Virtual sum with 10 threads: " + virtualSum10 + " in " + virtualTime10 + " ns");
+            startTime = System.currentTimeMillis();
+            long virtualSum10 = virtualSum(array, 10);
+            endTime = System.currentTimeMillis();
+            long virtualTime10 = endTime - startTime;
+            System.out.println("Virtual sum with 10 threads: " + virtualSum10 + " in " + virtualTime10 + " ms");
 
-        startTime = System.nanoTime();
-        long virtualSum100 = virtualSum(array, 100);
-        endTime = System.nanoTime();
-        long virtualTime100 = endTime - startTime;
-        System.out.println("Virtual sum with 100 threads: " + virtualSum100 + " in " + virtualTime100 + " ns");
+            startTime = System.currentTimeMillis();
+            long virtualSum100 = virtualSum(array, 100);
+            endTime = System.currentTimeMillis();
+            long virtualTime100 = endTime - startTime;
+            System.out.println("Virtual sum with 100 threads: " + virtualSum100 + " in " + virtualTime100 + " ms");
 
-        double virtualSpeedup10 = (double) sequentialTime / virtualTime10;
-        double virtualSpeedup100 = (double) sequentialTime / virtualTime100;
-        System.out.println("Virtual speedup with 10 threads: " + virtualSpeedup10);
-        System.out.println("Virtual speedup with 100 threads: " + virtualSpeedup100);
+            double virtualSpeedup10 = (double) sequentialTime / virtualTime10;
+            double virtualSpeedup100 = (double) sequentialTime / virtualTime100;
+            System.out.println("Virtual speedup with 10 threads: " + virtualSpeedup10);
+            System.out.println("Virtual speedup with 100 threads: " + virtualSpeedup100);
+        } catch (InterruptedException e) {
+            System.out.println("Interrompida.");
+            throw new RuntimeException(e);
+        } catch (ExecutionException e) {
+            System.out.println("Erro na execução.");
+            throw new RuntimeException(e);
+        }
     }
 
     private static long getSequencialSum(int[] array) {
