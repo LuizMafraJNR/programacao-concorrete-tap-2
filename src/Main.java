@@ -21,20 +21,18 @@ public class Main {
         long concurrentTime10 = endTime - startTime;
         System.out.println("Concurrent sum with 10 threads: " + concurrentSum10 + " in " + concurrentTime10 + " ns");
 
-        // Concurrent addition with 100 threads
+
         startTime = System.nanoTime();
         long concurrentSum100 = concurrentSum(array, 100);
         endTime = System.nanoTime();
         long concurrentTime100 = endTime - startTime;
         System.out.println("Concurrent sum with 100 threads: " + concurrentSum100 + " in " + concurrentTime100 + " ns");
 
-        // Speedup calculations
         double speedup10 = (double) sequentialTime / concurrentTime10;
         double speedup100 = (double) sequentialTime / concurrentTime100;
         System.out.println("Speedup with 10 threads: " + speedup10);
         System.out.println("Speedup with 100 threads: " + speedup100);
 
-        // Testes com threads virtuais
         startTime = System.nanoTime();
         long virtualSum10 = virtualSum(array, 10);
         endTime = System.nanoTime();
